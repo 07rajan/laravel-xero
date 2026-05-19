@@ -13,13 +13,6 @@
         }
     },
 
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/07rajan/laravel-xero"
-        }
-    ],
-
     "extra": {
         "laravel": {
             "providers": [
