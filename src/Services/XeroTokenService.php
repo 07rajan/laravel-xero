@@ -3,7 +3,7 @@
 namespace App\Services\Xero;
 
 use Illuminate\Support\Facades\Crypt;
-use App\Models\Xero\XeroToken;
+use App\Models\XeroToken;
 
 class XeroTokenService
 {
