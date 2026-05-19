@@ -1,0 +1,28 @@
+{
+    "name": "xerointegration/laravel-xero",
+
+    "description": "Laravel Xero Integration Package",
+
+    "type": "library",
+
+    "license": "MIT",
+
+    "autoload": {
+        "psr-4": {
+            "Xerointegration\\LaravelXero\\": "src/"
+        }
+    },
+
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Xerointegration\\LaravelXero\\LaravelXeroServiceProvider"
+            ]
+        }
+    },
+
+    "require": {
+        "php": "^7.4|^8.0",
+        "xeroapi/xero-php-oauth2": "^5.0"
+    }
+}
