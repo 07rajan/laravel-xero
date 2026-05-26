@@ -15,4 +15,9 @@ Route::prefix('api/xero')->group(function () {
         'redirect',
         [XeroController::class, 'callback']
     );
+
+    Route::get(
+        'status',
+        [XeroController::class, 'checkXeroStatus']
+    );
 });
