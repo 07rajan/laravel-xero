@@ -1,6 +1,6 @@
 <?php
 
-namespace Xerointegration\LaravelXero\Models\Xero;
+namespace Xerointegration\LaravelXero\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,16 +12,12 @@ class XeroToken extends Model
     protected static $logName = 'XeroToken';
     protected static $logOnlyDirty = true;
     protected static $logAttributes = [
+        "project_id",
         "access_token",
         "expires_at",
         "refresh_token",
-        "tenant_id",
-        "tenant_type",
-        "tenant_name",
-        "added_by",
-        "added_at"
+        "tenant_id"
     ];
-    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -29,14 +25,11 @@ class XeroToken extends Model
      * @var array
      */
     protected $fillable = [
+        "project_id",
         "access_token",
         "expires_at",
         "refresh_token",
-        "tenant_id",
-        "tenant_type",
-        "tenant_name",
-        "added_by",
-        "added_at"
+        "tenant_id"
     ];
     protected $table = 'xero_tokens';
     protected $primaryKey = 'id';

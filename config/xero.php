@@ -8,6 +8,8 @@ return [
     'client_secret' =>
         env('XERO_CLIENT_SECRET'),
 
-    'redirect_uri' =>
-        env('XERO_REDIRECT_URI'),
+    'landing_uri' =>
+        env('XERO_LANDING_URI'),
+    'project_id' =>
+        env('XERO_PROJECT_ID'),
 ];

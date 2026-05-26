@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Services\Xero;
+namespace Xerointegration\LaravelXero\Services;
 
 use Illuminate\Support\Facades\Crypt;
-use App\Models\XeroToken;
+use Xerointegration\LaravelXero\Models\XeroToken;
 
 class XeroTokenService
 {
     public function saveToken(
-        $userId,
         $tenantId,
         $token
     ) {

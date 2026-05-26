@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Xero;
+namespace Xerointegration\LaravelXero\Services;
 
 use XeroAPI\XeroPHP\Configuration;
 use League\OAuth2\Client\Provider\GenericProvider;
@@ -28,7 +28,7 @@ class XeroAuthService
     public function getAuthorizationUrl()
     {
         return $this->provider->getAuthorizationUrl([
-           'scope' => 'openid profile email offline_access accounting.settings',
+           'scope' => 'openid profile email offline_access accounting.settings accounting.contacts',
             'access_type' => 'offline'
         ]);
     }

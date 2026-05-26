@@ -13,6 +13,6 @@ Route::prefix('api/xero')->group(function () {
 
     Route::get(
         'redirect',
-        [XeroController::class, 'redirect']
+        [XeroController::class, 'callback']
     );
 });
