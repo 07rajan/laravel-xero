@@ -1,5 +1,5 @@
 <?php
-namespace App\Services\Xero;
+namespace Xerointegration\LaravelXero\Services;
 
 class XeroConfigService
 {
@@ -8,7 +8,7 @@ class XeroConfigService
         return [
             'client_id' => config('xero.client_id'),
             'client_secret' => config('xero.client_secret'),
-            'redirect_uri' => config('xero.redirect_uri')
+            'redirect_uri' => url('/api/xero/redirect'),
         ];
     }
 }

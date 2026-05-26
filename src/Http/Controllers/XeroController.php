@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use DB;
 use Xerointegration\LaravelXero\Services\XeroAuthService;
 use Xerointegration\LaravelXero\Services\XeroTokenService;
+use Illuminate\Routing\Controller;
 
 class XeroController extends Controller
 {
@@ -22,36 +23,40 @@ class XeroController extends Controller
         XeroAuthService $authService,
         XeroTokenService $tokenService
     ) {
+        try {
+            $provider = $authService->getProvider();
 
-        $provider = $authService->getProvider();
+            $token = $provider->getAccessToken(
+                'authorization_code',
+                [
+                    'code' => $request->code
+                ]
+            );
 
-        $token = $provider->getAccessToken(
-            'authorization_code',
-            [
-                'code' => $request->code
-            ]
-        );
+            $xero = new \XeroAPI\XeroPHP\Api\IdentityApi(
+                new \GuzzleHttp\Client(),
+                \XeroAPI\XeroPHP\Configuration
+                    ::getDefaultConfiguration()
+                    ->setAccessToken(
+                        $token->getToken()
+                    )
+            );
 
-        $xero = new \XeroAPI\XeroPHP\Api\IdentityApi(
-            new \GuzzleHttp\Client(),
-            \XeroAPI\XeroPHP\Configuration
-                ::getDefaultConfiguration()
-                ->setAccessToken(
-                    $token->getToken()
-                )
-        );
+            $connections = $xero->getConnections();
 
-        $connections = $xero->getConnections();
+            $tenantId =
+                $connections[0]->getTenantId();
 
-        $tenantId =
-            $connections[0]->getTenantId();
-
-        $tokenService->saveToken(
-            auth()->id(),
-            $tenantId,
-            $token
-        );
-
-        return 'Xero Connected';
+            $tokenService->saveToken(
+                $tenantId,
+                $token
+            );
+            return redirect(
+                config('xero.landing_uri')
+            );
+        }
+        catch (Exception $err) {
+            return $this->error("Something went wrong. Please try again later.", 500);
+        }
     }
 }

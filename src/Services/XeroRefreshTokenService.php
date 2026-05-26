@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Xero;
+namespace Xerointegration\LaravelXero\Services;
 
 use Illuminate\Support\Facades\Crypt;
 
@@ -34,9 +34,8 @@ class XeroRefreshTokenService
                 ),
 
             'expires_at' =>
-                now()->addSeconds(
-                    $newToken->getExpires()
-                )
+                date('Y-m-d H:i:s',$newToken->getExpires())
         ]);
+        return $newToken;
     }
 }
