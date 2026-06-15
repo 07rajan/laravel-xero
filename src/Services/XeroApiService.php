@@ -22,21 +22,12 @@ class XeroApiService
         }
         try {
             if (now()->gte($connection->expires_at)) {
-                $newToken = app(
-                    XeroRefreshTokenService::class
-                )->refresh($connection);
-                $accessToken =
-                    $newToken->getToken();
+                $newToken = app(XeroRefreshTokenService::class)->refresh($connection);
+                $accessToken = $newToken->getToken();
             } else {
-                $accessToken =
-                    Crypt::decryptString(
-                        $connection->access_token
-                    );
+                $accessToken = Crypt::decryptString($connection->access_token);
             }
-            $api = $this->makeApi(
-                $apiClass,
-                $accessToken
-            );
+            $api = $this->makeApi($apiClass,$accessToken);
             return $callback($api, $connection->tenant_id);
 
         } catch (Exception $e) {
@@ -51,7 +42,6 @@ class XeroApiService
                     $apiClass,
                     $newToken->getToken()
                 );
-                echo $connection->tenant_id.'---123---';
                 return $callback($api, $connection->tenant_id);
             }
             throw $e;

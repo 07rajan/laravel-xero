@@ -25,7 +25,6 @@ class XeroContactService
                 $contacts->setContacts([
                     $contact
                 ]);
-                echo $tenantId.'---456----';
                 return $api->createContacts(
                     $tenantId,
                     $contacts
@@ -39,15 +38,12 @@ class XeroContactService
         array $data
     ) {
 
-        return $this->xeroApiService
-            ->execute(
-
-                $tenantId,
-
+        return app(
+            XeroApiService::class
+        )->execute(
                 AccountingApi::class,
 
-                function ($api) use (
-                    $tenantId,
+                function ($api, $tenantId) use (
                     $contactId,
                     $data
                 ) {

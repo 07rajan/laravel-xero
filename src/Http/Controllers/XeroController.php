@@ -8,7 +8,6 @@ use DB;
 use Xerointegration\LaravelXero\Services\XeroAuthService;
 use Xerointegration\LaravelXero\Services\XeroTokenService;
 use Illuminate\Routing\Controller;
-use Xerointegration\LaravelXero\Models\XeroToken;
 
 class XeroController extends Controller
 {
@@ -55,20 +54,6 @@ class XeroController extends Controller
             return redirect(
                 config('xero.landing_uri')
             );
-        }
-        catch (Exception $err) {
-            return $this->error("Something went wrong. Please try again later.", 500);
-        }
-    }
-
-    public function checkXeroStatus() {
-        try {
-            $connection = XeroToken::where('project_id',config('xero.project_id'))->first();
-            return response()->json([
-                'status' => true,
-                'message' => "Xero data fetched successfully.",
-                'data' => $connection,
-            ], 200);
         }
         catch (Exception $err) {
             return $this->error("Something went wrong. Please try again later.", 500);

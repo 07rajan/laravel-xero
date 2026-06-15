@@ -1,6 +1,7 @@
 <?php
 namespace Xerointegration\LaravelXero\Traits;
 use Xerointegration\LaravelXero\Services\XeroContactService;
+use Xerointegration\LaravelXero\Services\XeroItemService;
 
 use Carbon\Carbon;
 
@@ -58,6 +59,86 @@ trait XeroTrait
         else
         {
             return $xeroContactService->createCustomer($createData);
+        }
+    }
+
+    protected static function createOrUpdateItem($data, $xeroId = null)
+    {   
+        $xeroItemService = app(XeroItemService::class);
+        $createData = [
+            "code" => $data['code'],
+            "name" => isset($data['name']) ? $data['name'] : '',
+            "description"=> isset($data['description']) ? $data['description'] : '',
+            "purchaseDescription" => isset($data['purchaseDescription']) ? $data['purchaseDescription'] : '',
+            "isSold" => isset($data['isSold']) ? $data['isSold'] : '',
+            "isPurchased" => isset($data['isPurchased']) ? $data['isPurchased'] : '',
+            "isTrackedAsInventory" => isset($data['isTrackedAsInventory']) ? $data['isTrackedAsInventory'] : '',
+            "quantityOnHand" => isset($data['quantityOnHand']) ? $data['quantityOnHand'] : '',
+        ];
+        if(isset($data['salePrice']))
+        {
+            $createData['salesDetails'] = [
+                "unitPrice" => isset($data['salePrice']) ? $data['salePrice'] : '',
+                "accountCode" => isset($data['accountCode']) ? $data['accountCode'] : '200',
+                "taxType" => isset($data['taxType']) ? $data['taxType'] : 'OUTPUT',
+            ];
+        }
+        if(isset($data['purchasePrice']))
+        {
+            $createData['purchaseDetails'] = [
+                "unitPrice" => isset($data['purchasePrice']) ? $data['purchasePrice'] : '',
+                "accountCode" => isset($data['accountCode']) ? $data['accountCode'] : '300',
+                "taxType" => isset($data['taxType']) ? $data['taxType'] : 'INPUT',
+            ];
+        }
+
+        if(!empty($xeroId))
+        {
+            return $xeroItemService->updateItem($xeroId, $createData);
+        }
+        else
+        {
+            return $xeroItemService->createItem($createData);
+        }
+    }
+
+    protected static function createOrUpdateInvoice($data, $xeroId = null)
+    {   
+        $xeroItemService = app(XeroItemService::class);
+        $createData = [
+            "code" => $data['code'],
+            "name" => isset($data['name']) ? $data['name'] : '',
+            "description"=> isset($data['description']) ? $data['description'] : '',
+            "purchaseDescription" => isset($data['purchaseDescription']) ? $data['purchaseDescription'] : '',
+            "isSold" => isset($data['isSold']) ? $data['isSold'] : '',
+            "isPurchased" => isset($data['isPurchased']) ? $data['isPurchased'] : '',
+            "isTrackedAsInventory" => isset($data['isTrackedAsInventory']) ? $data['isTrackedAsInventory'] : '',
+            "quantityOnHand" => isset($data['quantityOnHand']) ? $data['quantityOnHand'] : '',
+        ];
+        if(isset($data['salePrice']))
+        {
+            $createData['salesDetails'] = [
+                "unitPrice" => isset($data['salePrice']) ? $data['salePrice'] : '',
+                "accountCode" => isset($data['accountCode']) ? $data['accountCode'] : '200',
+                "taxType" => isset($data['taxType']) ? $data['taxType'] : 'OUTPUT',
+            ];
+        }
+        if(isset($data['purchasePrice']))
+        {
+            $createData['purchaseDetails'] = [
+                "unitPrice" => isset($data['purchasePrice']) ? $data['purchasePrice'] : '',
+                "accountCode" => isset($data['accountCode']) ? $data['accountCode'] : '300',
+                "taxType" => isset($data['taxType']) ? $data['taxType'] : 'INPUT',
+            ];
+        }
+
+        if(!empty($xeroId))
+        {
+            return $xeroItemService->updateItem($xeroId, $createData);
+        }
+        else
+        {
+            return $xeroItemService->createItem($createData);
         }
     }
 }
