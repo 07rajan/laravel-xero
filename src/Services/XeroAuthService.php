@@ -28,7 +28,7 @@ class XeroAuthService
     public function getAuthorizationUrl()
     {
         return $this->provider->getAuthorizationUrl([
-           'scope' => 'openid profile email offline_access accounting.settings accounting.contacts',
+           'scope' => 'openid profile email offline_access accounting.settings accounting.contacts accounting.invoices',
             'access_type' => 'offline'
         ]);
     }
